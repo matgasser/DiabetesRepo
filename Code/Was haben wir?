@@ -5,3 +5,10 @@ Histplot Raw/Clean
 Heatmap Clean
 Sorted Head Map Correlaton of Outcome
 Pair plot
+
+Need:
+Boxplots
+Forrest plot
+Scatter Plots
+Train/Test Split
+Model Building
