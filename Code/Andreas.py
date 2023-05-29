@@ -36,6 +36,8 @@ fig.write_image('../Output/outcomeXquantity.png')
 
 
 
+
+
 #Alle Feature im Vergleich zum Outcome
 fig = make_subplots(rows=4, cols=2, subplot_titles=('Outcome vs. Pregnancies',
                                                     'Outcome vs. Glucose',
