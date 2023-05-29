@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, r2_score, mean_squared_error
 # loading the data
-rawData = pd.read_csv(r'../data/diabetes.csv')
+rawData = pd.read_csv(r'../data/diabetes.csv') #unsbearbeitete Daten
 
 sc_X = StandardScaler()
 X =  pd.DataFrame(sc_X.fit_transform(rawData.drop(["Outcome"],axis = 1),),
@@ -24,6 +24,7 @@ accuracy = logistic.score(X_test,y_test)
 print("Accurecy = " , accuracy * 100, "%")
 
 log_prediciton = logistic.predict(X_test)
+
 print("Classification Report is:\n", classification_report(y_test, log_prediciton))
 print("Confusion Matrix:\n", confusion_matrix(y_test, log_prediciton))
 print("Training Score:\n", logistic.score(X_train, y_train) * 100)
