@@ -30,7 +30,7 @@ rawData.info()
 
 rD = rawData['Outcome'].value_counts().reset_index()
 rD.columns = ['Outcome', 'Quantity']
-fig = pltex.bar(rD, x='Outcome', y='Quantity', title='n Patients by Outcome (no = no diabetes, yes = diabetes)')
+fig = pltex.bar(rD, x='Outcome', y='Quantity', title='n Patients by Outcome (no = no diabetes, yes = diabetes)', color=('cyan','cyan'))
 plt.savefig("../Output/outcomeXquantity.png")
 fig.show()
 
