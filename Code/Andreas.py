@@ -20,7 +20,7 @@ def outcomeConvert(x):
 
 
 # loading the data
-rawData = pd.read_csv('../data/clean_data.csv')
+rawData = pd.read_csv(r'../data/clean_data.csv')
 print(rawData)
 
 #Outcome allg. pro Patient
@@ -30,9 +30,10 @@ rawData.info()
 
 rD = rawData['Outcome'].value_counts().reset_index()
 rD.columns = ['Outcome', 'Quantity']
-fig = pltex.bar(rD, x='Outcome', y='Quantity', title='n Patients by Outcome (no = no diabetes, yes = diabetes)', color=('cyan','cyan'))
-plt.savefig("../Output/outcomeXquantity.png")
+fig = pltex.bar(rD, x='Outcome', y='Quantity', title='N Patients by Outcome (no = no diabetes, yes = diabetes)')
 fig.show()
+fig.write_image('../Output/outcomeXquantity.png')
+
 
 
 #Alle Feature im Vergleich zum Outcome
@@ -71,5 +72,5 @@ fig.update_coloraxes(colorbar_tickfont_size=10)
 fig.update_annotations(font_size=15)
 # Reduce opacity
 fig.update_traces(opacity=1)
-plt.savefig("../Output/outcomeXfeatures.png")
 fig.show()
+fig.write_image('../Output/outcomeXfeatures.png')
