@@ -218,9 +218,14 @@ def apply_dbscan(X, y, eps_range, min_samples_range):
     return scores_silouhette, scores_ari, summary
 
 
+
+
+cleandat = pd.read_csv(r'../data/diabetes.csv')
+
 # Read data
-X = pd.read_csv(r'../data/diabetes.csv')
+X = cleandat
 y = X.Outcome
+
 y.dropna(inplace=True)
 
 X = X.loc[y.index.to_list()]
