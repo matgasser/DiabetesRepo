@@ -14,9 +14,9 @@ import os"""
 
 def outcomeConvert(x):
     if x == 1:
-        return 'Yes'
+        return 'yes'
     else:
-        return 'No'
+        return 'no'
 
 
 # loading the data
@@ -35,7 +35,7 @@ fig.show()
 
 
 #Alle Feature im Vergleich zum Outcome
-fig = make_subplots(rows=2, cols=4, subplot_titles=('Outcome vs. Pregnancies',
+fig = make_subplots(rows=4, cols=2, subplot_titles=('Outcome vs. Pregnancies',
                                                     'Outcome vs. Glucose',
                                                     'Outcome vs. Blood Pressure',
                                                     'Outcome vs. Skin Thickness',
@@ -46,28 +46,28 @@ fig = make_subplots(rows=2, cols=4, subplot_titles=('Outcome vs. Pregnancies',
                                                     ))
 
 fig.add_trace(pltgo.Box(y=rawData['Pregnancies'], x=rawData['Outcome']), row=1, col=1)
-fig.add_trace(pltgo.Box(y=rawData['Glucose'], x=rawData['Outcome']), row=1, col=2)
-fig.add_trace(pltgo.Box(y=rawData['BloodPressure'], x=rawData['Outcome']), row=1, col=3)
-fig.add_trace(pltgo.Box(y=rawData['SkinThickness'], x=rawData['Outcome']), row=1, col=4)
-fig.add_trace(pltgo.Box(y=rawData['Insulin'], x=rawData['Outcome']), row=2, col=1)
+fig.add_trace(pltgo.Box(y=rawData['Glucose'], x=rawData['Outcome']), row=2, col=1)
+fig.add_trace(pltgo.Box(y=rawData['BloodPressure'], x=rawData['Outcome']), row=3, col=1)
+fig.add_trace(pltgo.Box(y=rawData['SkinThickness'], x=rawData['Outcome']), row=4, col=1)
+fig.add_trace(pltgo.Box(y=rawData['Insulin'], x=rawData['Outcome']), row=1, col=2)
 fig.add_trace(pltgo.Box(y=rawData['BMI'], x=rawData['Outcome']), row=2, col=2)
-fig.add_trace(pltgo.Box(y=rawData['DiabetesPedigreeFunction'], x=rawData['Outcome']), row=2, col=3)
-fig.add_trace(pltgo.Box(y=rawData['Age'], x=rawData['Outcome']), row=2, col=4)
+fig.add_trace(pltgo.Box(y=rawData['DiabetesPedigreeFunction'], x=rawData['Outcome']), row=3, col=2)
+fig.add_trace(pltgo.Box(y=rawData['Age'], x=rawData['Outcome']), row=4, col=2)
 
 # Update visual layout
 fig.update_layout(
     showlegend=False,
-    width=1000,
-    height=400,
+    width=800,
+    height=1000,
     autosize=False,
     margin=dict(t=15, b=0, l=5, r=5),
-    template="grey",
+    template= "ggplot2"
 )
 
 # update font size, axes
 fig.update_coloraxes(colorbar_tickfont_size=10)
 # Update font in the titles
-fig.update_annotations(font_size=12)
+fig.update_annotations(font_size=15)
 # Reduce opacity
 fig.update_traces(opacity=1)
 fig.show()
