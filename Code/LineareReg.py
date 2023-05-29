@@ -9,9 +9,7 @@ rawData = pd.read_csv(r'../data/diabetes.csv') #unsbearbeitete Daten
 
 sc_X = StandardScaler()
 X =  pd.DataFrame(sc_X.fit_transform(rawData.drop(["Outcome"],axis = 1),),
-        columns=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin',
-       'BMI', 'DiabetesPedigreeFunction', 'Age'])
-
+        columns=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'])
 y = rawData.Outcome
 
 #Data splitting
