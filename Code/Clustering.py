@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import silhouette_score, adjusted_rand_score
 from sklearn.decomposition import PCA
 from sklearn import preprocessing
+from sklearn.neighbors import NearestNeighbors
+import plotly.express as px
 import os
 from sklearn.cluster import DBSCAN
 import pandas as pd
@@ -89,7 +91,8 @@ def plot_cluster_vs_actual_class(X, y_true, cluster_labels, algorithm, unsupervi
         fontweight="bold",
         )
     plt.tight_layout()
-    plt.savefig(f"../output/{algorithm} Plot_true_vs_cluster_for_{n_clusters}_clusters.png")
+    plt.show()
+    #plt.savefig(f"../output/{algorithm} Plot_true_vs_cluster_for_{n_clusters}_clusters.png")
 
 
 # function to manually calculate the sum of squared distances to evaluate clustering performances.
@@ -218,10 +221,6 @@ def apply_dbscan(X, y, eps_range, min_samples_range):
 # Read data
 X = pd.read_csv(r'../data/diabetes.csv')
 y = X.Outcome
-
-print(X)
-print(y)
-
 y.dropna(inplace=True)
 
 X = X.loc[y.index.to_list()]
@@ -234,7 +233,24 @@ le = preprocessing.LabelEncoder()
 y = le.fit_transform(y)
 MAPPING = {i: le.classes_[i] for i in np.arange(len(le.classes_))}
 
-max_n_clusters = 8
+neigh = NearestNeighbors(n_neighbors=2)
+nbrs = neigh.fit(X)
+distances, indices = nbrs.kneighbors(X)
+
+# next, we sort and plot the results
+distances = np.sort(distances, axis=0)
+distances = distances[:,1]
+
+fig = px.scatter(
+    distances,
+    title='Distance Curve')
+fig.update_xaxes(title_text='Distances')
+fig.update_yaxes(title_text='Distance threashold (espsilon)')
+fig.update_layout(showlegend=False)
+fig.show()
+
+
+max_n_clusters = 12
 # create an array that contain the different number of clusters from 2 to max_n_cluster
 n_clusters = np.arange(2, max_n_clusters)
 
@@ -247,13 +263,14 @@ plt.xlabel('Number of Clusters')
 plt.ylabel('WCSS')
 plt.grid()
 plt.tight_layout()
-plt.savefig('../Output/plots')
+plt.show()
+#plt.savefig('../Output/plots')
 
 # DBSCAN
 # scores manually defined to make a search.
 # Define a list for eps and min_samples parameters of DBSCAN algorithm
-eps_range = [0.1, 0.2, 0.3, 0.4, 0.5, 1.0, 3.0]
-min_samples_range = [2, 3, 4, 5, 10, 20, 50]
+eps_range = [1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2,2.3, 2.4]
+min_samples_range = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 # lists to store the results of the scores. Define one supervised (you know the true classes)
 # and one unsupervised (you don't know the true classes) score
 
@@ -262,11 +279,11 @@ scores_silouhette, scores_ari, summary = apply_dbscan(X, y, eps_range, min_sampl
 # sort summary according to silouhette and ARI
 summary_silouhette = summary.sort_values(by='silouhette', ascending=False)[:5]
 
-summary_silouhette.to_csv('../Output/summary_DBSCAN_silouhette_5_best.csv')
+#summary_silouhette.to_csv('../Output/summary_DBSCAN_silouhette_5_best.csv')
 
 summary_ari = summary.sort_values(by='ari', ascending=False)[:5]
 
-summary_ari.to_csv('../Output/summary_DBSCAN_ari_5_best.csv')
+#summary_ari.to_csv('../Output/summary_DBSCAN_ari_5_best.csv')
 
 # extract best values for the hyperparameters according to ARI and fit again the DBSCAN with
 # the extracted best parameters
