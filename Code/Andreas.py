@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as pltex
 from plotly.subplots import make_subplots
 import plotly.graph_objects as pltgo
-import plotly.io as pio
+import matplotlib.pyplot as plt
 
 
 """import numpy as np
@@ -31,6 +31,7 @@ rawData.info()
 rD = rawData['Outcome'].value_counts().reset_index()
 rD.columns = ['Outcome', 'Quantity']
 fig = pltex.bar(rD, x='Outcome', y='Quantity', title='n Patients by Outcome (no = no diabetes, yes = diabetes)')
+plt.savefig("../Output/outcomeXquantity.png")
 fig.show()
 
 
@@ -70,4 +71,5 @@ fig.update_coloraxes(colorbar_tickfont_size=10)
 fig.update_annotations(font_size=15)
 # Reduce opacity
 fig.update_traces(opacity=1)
+plt.savefig("../Output/outcomeXfeatures.png")
 fig.show()
