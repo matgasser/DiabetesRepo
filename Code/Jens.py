@@ -160,7 +160,6 @@ plt.savefig("../Output/pairplot_clean_Data.png")
 # Correlation between all the features
 plt.figure(figsize=(10, 10))
 correlation = sns.heatmap(clean_Data.corr(), annot=True, cmap='viridis')
-ax.set_title('Correlation Heatmap')
 plt.tight_layout()
 plt.savefig("../Output/Heatmap clean_Data.png")
 

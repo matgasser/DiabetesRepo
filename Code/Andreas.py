@@ -7,6 +7,6 @@ import seaborn as sns
 import os
 
 
-# loading the data :)
+# loading the data :) --gf
 rawData = pd.read_csv('../data/diabetes.csv')
 
