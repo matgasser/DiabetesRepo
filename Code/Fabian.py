@@ -8,7 +8,7 @@ from plotly.subplots import make_subplots
 
 
 
-#load data lol
+#load data
 rawdata = pd.read_csv('../data/diabetes.csv',encoding="ISO-8859-1")
 rawdata.head()
 
