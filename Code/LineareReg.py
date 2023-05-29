@@ -24,8 +24,6 @@ accuracy = logistic.score(X_test,y_test)
 print("Accurecy = " , accuracy * 100, "%")
 
 log_prediciton = logistic.predict(X_test)
-
-
 print("Classification Report is:\n", classification_report(y_test, log_prediciton))
 print("Confusion Matrix:\n", confusion_matrix(y_test, log_prediciton))
 print("Training Score:\n", logistic.score(X_train, y_train) * 100)
