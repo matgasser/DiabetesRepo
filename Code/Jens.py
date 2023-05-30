@@ -1,15 +1,15 @@
 """Project Checklist
-Installs and Imports
+Installs and Imports --> CHECK
 
-Get the Data
+Get the Data --> CHECK
 
-Basic Info
+Basic Info --> CHECK
 
-Replacing Zero Values
-Exploratory Analysis
-Correlation
-Box Plot
-Histograms
+Replacing Zero Values --> CHECK
+Exploratory Analysis --> CHECK
+Correlation --> CHECK
+Box Plot --> CHECK
+Histograms --> CHECK
 Target Split
 
 Train Test Split
