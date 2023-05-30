@@ -316,8 +316,9 @@ df_plot = pd.DataFrame({'Genes':lab.tolist(), 'Mean Coefficient':top_features['m
 ### add a short block of code to create a nice plot with all required labels etc.
 
 
-ax = df_plot.plot.bar(x='Genes', y='Mean Coefficient', yerr=top_features.std(axis=1), rot=90, color='grey')
-ax.set_xlabel('Genes')
+variable_names = top_features.index.tolist()
+ax = df_plot.plot.bar(x='Variables', y='Mean Coefficient', yerr=top_features.std(axis=1), rot=90, color='grey')
+ax.set_xlabel('Variables')
 ax.set_ylabel('Mean Coefficient')
 ax.set_title('Top 15 Feature Importance')
 plt.savefig('./output/importance.png')
