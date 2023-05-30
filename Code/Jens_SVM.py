@@ -12,7 +12,7 @@ rawData = pd.read_csv("../data/diabetes.csv")
 X = rawData.drop(columns = 'Outcome', axis=1)
 Y = rawData['Outcome']
 
-# standadardization of the data
+# standadardization of the data --> verbesserte Konvergenz und weniger Ausreissereinfluss
 scaler = StandardScaler()
 scaler.fit(X)
 standardized_data = scaler.transform(X)
