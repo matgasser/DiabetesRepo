@@ -662,6 +662,7 @@ print('Info of missing data in raw_data:', raw_data.isna().sum())
 
 # Remove NaN from y
 data = raw_data.drop('Outcome', axis=1)
+data[data == 0] = np.nan
 
 # Standardize X
 scaler = StandardScaler()
