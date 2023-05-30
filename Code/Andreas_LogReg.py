@@ -5,12 +5,14 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, r2_score, mean_squared_error
 # loading the data
-rawData = pd.read_csv(r'../data/diabetes.csv') #unsbearbeitete Daten
+rawData = pd.read_csv(r'../data/clean_Data.csv') #unsbearbeitete Daten
+cd = rawData.dropna()
 
 sc_X = StandardScaler()
-X =  pd.DataFrame(sc_X.fit_transform(rawData.drop(["Outcome"],axis = 1),),
-        columns=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'])
-y = rawData.Outcome
+X = pd.DataFrame(sc_X.fit_transform(cd.drop(["Outcome"],axis = 1),),
+        columns=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness',
+                 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'])
+y = cd.Outcome
 
 #Data splitting
 X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=0)
