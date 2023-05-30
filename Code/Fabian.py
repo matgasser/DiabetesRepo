@@ -1,4 +1,4 @@
-#Clustering(467), Linear Regression(345), Analyzing Data(32) & Classification(108)
+#Clustering(467), Linear Regression(345), Analyzing Data(32), basic statistic stats (725) & Classification(108)
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -719,3 +719,96 @@ ari_ari = ari
 
 # using the 'plot_cluster_vs_actual_class' function that you implemented, plot the groups formed by the clustering algorithm and the true classes.
 plot_cluster_vs_actual_class(X, dbscan_ari_labels, 'DBSCAN_ARI', silhouette_ari, ari_ari)
+
+
+####################################################################################################################################################
+# basic statistical tests in Python
+
+
+if __name__ == "__main__":
+    # ######################################### #
+    # ##### Task 1: load and inspect data ##### #
+    # ######################################### #
+    # Task 1a: load data and make sure that all columns are of the data type you
+    # would expect given their meaning.
+    data = pd.read_csv(
+        filepath_or_buffer="../data/diabetes.csv",
+        index_col=0,
+    )
+
+
+    print(data.dtypes)
+    
+    for col in data.columns:
+        if data[col].dtype == "category":
+            print(f"Column {col} ordered? {data[col].cat.ordered}")
+
+    # Task 1b: Summarise the data set.
+    #  How many observations are recorded? Do you notice anything in particular
+    #  about the outcome variable?
+    
+    n_obs = len(data)
+    n_positive_outcome = len(data[data['Outcome'] == 1])
+    print(f"Of {n_obs} patients, {n_positive_outcome} have a positive outcome.")
+
+    for var in ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']:
+        hist = sns.histplot(
+            x=data[var],
+            data=data,
+            kde=True
+        )
+        plt.savefig(
+            f"./output/{var}_histplot.pdf",
+            format="pdf"
+        )
+        plt.close()
+        
+        stat, p = shapiro(data[var])
+        print(f"Test for normality of {var}: p={p:.10f}")
+    
+    plt.figure()
+    plt.scatter(data=data, x='Age', y='BMI', s=5)
+    plt.xlabel('Age')
+    plt.ylabel('BMI')
+    plt.savefig('./output/scatter_age_bmi.pdf')
+
+    pearson_corr, _ = pearsonr(data['Age'], data['BMI'])
+    spearman_corr, _ = spearmanr(data['Age'], data['BMI'])
+    print(f"Pearson correlation between Age and BMI: {pearson_corr:.10f}")
+    print(f"Spearman correlation between Age and BMI: {spearman_corr:.10f}")
+
+    # Task 2: statistical testing
+    SIGNIFICANCE_LEVEL = 0.05
+    for var in ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']:
+        p = ranksums(data[var][data['Outcome'] == 1], data[var][data['Outcome'] == 0])[1]
+        if p > SIGNIFICANCE_LEVEL:
+            print(
+                f"No statistically significant difference in {var} between patients with positive outcome and patients with negative outcome "
+                + f"(p={p:.4f})."
+            )
+        else:
+            print(
+                f"Statistically significant difference in {var} between patients with positive outcome and patients with negative outcome "
+                + f"(p={p:.4f})."
+            )
+
+    # Task 3: resampling to extend analysis
+    seeds = [i for i in range(1, 51)]
+    group_sizes = 100
+    p_values = pd.DataFrame(
+        index=seeds,
+        columns=['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
+    )
+
+    comparison_columns = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
+    for seed in seeds:
+        np.random.seed(seed)
+        group1_indices = np.random.choice(data[data['Outcome'] == 1].index, size=group_sizes, replace=True)
+        group2_indices = np.random.choice(data[data['Outcome'] == 0].index, size=group_sizes, replace=True)
+        for col in comparison_columns:
+            p = ranksums(data.loc[group1_indices, col], data.loc[group2_indices, col])[1]
+            p_values.loc[seed, col] = p
+
+    significant_counts = (p_values < SIGNIFICANCE_LEVEL).sum()
+    print("Number of statistically significant differences in resampling:")
+    print(significant_counts)
