@@ -8,6 +8,7 @@ from sklearn.decomposition import PCA
 from sklearn import preprocessing
 from sklearn.neighbors import NearestNeighbors
 import plotly.express as px
+from sklearn.preprocessing import StandardScaler
 import os
 from sklearn.cluster import DBSCAN
 import pandas as pd
@@ -220,19 +221,20 @@ def apply_dbscan(X, y, eps_range, min_samples_range):
 
 
 
-cleandat = pd.read_csv(r'../data/diabetes.csv')
-
+cleandat = pd.read_csv(r'../data/clean_Data.csv')
+cd = cleandat.dropna()
+scaler = StandardScaler()
 # Read data
-X = cleandat
-y = X.Outcome
+X = pd.DataFrame(scaler.fit_transform(cd.drop(["Outcome"],axis = 1),),
+        columns=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness',
+                 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'])
+y = cd.Outcome
 
-y.dropna(inplace=True)
-
-X = X.loc[y.index.to_list()]
-
+""""#X = X.loc[y.index.to_list()]
 # Standardize the dataset
-scaler = preprocessing.StandardScaler()
-X = scaler.fit_transform(X)
+#scaler = preprocessing.StandardScaler()
+#X = scaler.fit_transform(X)"""
+
 y = y.values.reshape(-1)
 le = preprocessing.LabelEncoder()
 y = le.fit_transform(y)
@@ -274,7 +276,7 @@ plt.show()
 # DBSCAN
 # scores manually defined to make a search.
 # Define a list for eps and min_samples parameters of DBSCAN algorithm
-eps_range = [1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2,2.3, 2.4]
+eps_range = [2.16]
 min_samples_range = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 # lists to store the results of the scores. Define one supervised (you know the true classes)
 # and one unsupervised (you don't know the true classes) score
