@@ -1,3 +1,4 @@
+#Clustering(467), Linear Regression(345), Analyzing Data(32) & Classification(108)
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -31,17 +32,6 @@ warnings.filterwarnings("ignore")
 #load data
 rawdata = pd.read_csv('../data/diabetes.csv',encoding="ISO-8859-1")
 rawdata.head()
-
-
-
-def cleandata(rawdata):
-    cleaned_data = rawdata.copy()
-    columns_to_clean = [col for col in rawdata.columns if col != "Pregnancies"]
-    cleaned_data[columns_to_clean] = cleaned_data[columns_to_clean].replace(0, float('nan'))
-
-    return cleaned_data
-
-cleandata = cleandata(rawdata)
 
 
 
