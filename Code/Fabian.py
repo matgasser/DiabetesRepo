@@ -34,17 +34,6 @@ rawdata.head()
 
 
 
-def cleandata(rawdata):
-    cleaned_data = rawdata.copy()
-    columns_to_clean = [col for col in rawdata.columns if col != "Pregnancies"]
-    cleaned_data[columns_to_clean] = cleaned_data[columns_to_clean].replace(0, float('nan'))
-
-    return cleaned_data
-
-cleandata = cleandata(rawdata)
-
-
-
 #Explore the data
 print(rawdata.dtypes)
 print(rawdata.head)
