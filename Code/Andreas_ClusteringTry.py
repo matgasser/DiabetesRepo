@@ -276,8 +276,9 @@ plt.show()
 # DBSCAN
 # scores manually defined to make a search.
 # Define a list for eps and min_samples parameters of DBSCAN algorithm
-eps_range = [2.16]
-min_samples_range = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+eps_range = np.arange(2, 3, 0.1).tolist()
+#eps_range = [x in range(2,3,+0.1)]
+min_samples_range = np.arange(2, 10, 1).tolist()
 # lists to store the results of the scores. Define one supervised (you know the true classes)
 # and one unsupervised (you don't know the true classes) score
 
