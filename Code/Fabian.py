@@ -260,6 +260,10 @@ for train_index, test_index in skf.split(X, y):
     df_performance.loc[len(df_performance), ['Fold', 'Classifier', 'Accuracy', 'Precision', 'Recall', 'Specificity', 'F1 Score', 'AUC']] = [fold, 'LR'] + eval_metrics
     eval_metrics_RF = evaluation_metrics(clf2, y_test, X_test_sc, axs[1],legend_entry=str(fold))
     df_performance.loc[len(df_performance), ['Fold', 'Classifier', 'Accuracy', 'Precision', 'Recall', 'Specificity', 'F1 Score', 'AUC']] = [fold, 'RF'] + eval_metrics_RF
+
+    coefs = clf.coef_[0]
+    df_LR_normcoef = pd.DataFrame({'Feature': X.columns, 'Coefficient': coefs})
+    
     # increase counter for folds
     fold += 1
 
