@@ -1,3 +1,7 @@
+"""
+SVM geht nicht mit NaN-Werten --> Werte annehmen via KNN
+"""
+
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
@@ -6,11 +10,11 @@ from sklearn import svm
 from sklearn.metrics import accuracy_score
 
 # load data
-rawData = pd.read_csv("../data/diabetes.csv")
+clean_Data = pd.read_csv("../data/clean_Data.csv")
 
 # separating the data and labels
-X = rawData.drop(columns = 'Outcome', axis=1)
-Y = rawData['Outcome']
+X = clean_Data.drop(columns = 'Outcome', axis=1)
+Y = clean_Data['Outcome']
 
 # standadardization of the data
 scaler = StandardScaler()
