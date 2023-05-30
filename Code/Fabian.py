@@ -1,3 +1,4 @@
+#Clustering(467), Linear Regression(345), Analyzing Data(32) & Classification(108)
 import numpy as np
 import pandas as pd
 import seaborn as sns
