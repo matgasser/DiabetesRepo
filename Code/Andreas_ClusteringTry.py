@@ -271,7 +271,7 @@ plt.ylabel('WCSS')
 plt.grid()
 plt.tight_layout()
 plt.show()
-#plt.savefig('../Output/plots')
+plt.savefig('../Output/plots')
 
 # DBSCAN
 # scores manually defined to make a search.
@@ -287,11 +287,11 @@ scores_silouhette, scores_ari, summary = apply_dbscan(X, y, eps_range, min_sampl
 # sort summary according to silouhette and ARI
 summary_silouhette = summary.sort_values(by='silouhette', ascending=False)[:5]
 
-#summary_silouhette.to_csv('../Output/summary_DBSCAN_silouhette_5_best.csv')
+summary_silouhette.to_csv('../Output/summary_DBSCAN_silouhette_5_best_al.csv')
 
 summary_ari = summary.sort_values(by='ari', ascending=False)[:5]
 
-#summary_ari.to_csv('../Output/summary_DBSCAN_ari_5_best.csv')
+summary_ari.to_csv('../Output/summary_DBSCAN_ari_5_best_al.csv')
 
 # extract best values for the hyperparameters according to ARI and fit again the DBSCAN with
 # the extracted best parameters
