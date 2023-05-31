@@ -93,7 +93,7 @@ def plot_cluster_vs_actual_class(X, y_true, cluster_labels, algorithm, unsupervi
         )
     plt.tight_layout()
     plt.show()
-    plt.savefig(f"../output/{algorithm} Plot_true_vs_cluster_for_{n_clusters}_clusters.png")
+    plt.savefig(f"../output/{algorithm} Plot_true_vs_cluster_for_{n_clusters}_clusters_al.png")
 
 
 # function to manually calculate the sum of squared distances to evaluate clustering performances.
