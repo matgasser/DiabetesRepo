@@ -173,7 +173,7 @@ y = median_imputed_data['Outcome']
 sc= StandardScaler()
 x_scaled= sc.fit_transform(x)
 
-x_train, x_test, y_train, y_test = train_test_split(x_scaled, y, test_size=0.3, random_state=0)
+x_train, x_test, y_train, y_test = train_test_split(x_scaled, y, test_size=0.2, random_state=0)
 x_train.shape, y_train.shape
 
 x_test.shape, y_test.shape
