@@ -13,6 +13,8 @@ cd = cleandat.dropna()
 X = cd.drop('Outcome', axis=1)
 y = cd['Outcome']
 
+print(len(X))
+
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
