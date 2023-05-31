@@ -32,3 +32,5 @@ print("Accuracy:", accuracy)
 plt.figure(figsize=(12, 8))
 plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'], filled=True)
 plt.show()
+
+#variable
