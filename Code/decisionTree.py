@@ -29,7 +29,7 @@ accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
 
 # Visualize the decision tree
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(20, 15))
 plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'], filled=True)
 plt.show()
 
