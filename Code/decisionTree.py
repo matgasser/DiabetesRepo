@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 
 # Load the dataset
-cleandat = pd.read_csv(r'../data/clean_Data.csv')
+cleandat = pd.read_csv(r'./data/clean_Data.csv')
 cd = cleandat.dropna()
 
 # Split the dataset into features (X) and target variable (y)
@@ -31,4 +31,4 @@ print("Accuracy:", accuracy)
 # Visualize the decision tree
 plt.figure(figsize=(12, 8))
 plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'], filled=True)
-plt.show()
+plt.savefig("./Output/decision_tree.svg")
