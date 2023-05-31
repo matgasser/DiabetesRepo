@@ -93,7 +93,7 @@ def plot_cluster_vs_actual_class(X, y_true, cluster_labels, algorithm, unsupervi
         )
     plt.tight_layout()
     plt.show()
-    plt.savefig(f"../output/{algorithm} Plot_true_vs_cluster_for_{n_clusters}_clusters_al.png")
+    plt.savefig(f"./output/{algorithm} Plot_true_vs_cluster_for_{n_clusters}_clusters_al.png")
 
 
 # function to manually calculate the sum of squared distances to evaluate clustering performances.
@@ -221,7 +221,7 @@ def apply_dbscan(X, y, eps_range, min_samples_range):
 
 
 
-cleandat = pd.read_csv(r'../data/clean_Data.csv')
+cleandat = pd.read_csv(r'./data/clean_Data.csv')
 cd = cleandat.dropna()
 scaler = StandardScaler()
 # Read data
@@ -270,7 +270,7 @@ plt.xlabel('Number of Clusters')
 plt.ylabel('WCSS')
 plt.grid()
 plt.tight_layout()
-plt.savefig('../Output/plots')
+plt.savefig('./Output/plots')
 plt.show()
 
 # DBSCAN
@@ -287,11 +287,11 @@ scores_silouhette, scores_ari, summary = apply_dbscan(X, y, eps_range, min_sampl
 # sort summary according to silouhette and ARI
 summary_silouhette = summary.sort_values(by='silouhette', ascending=False)[:5]
 
-summary_silouhette.to_csv('../Output/summary_DBSCAN_silouhette_5_best_al.csv')
+summary_silouhette.to_csv('./Output/summary_DBSCAN_silouhette_5_best_al.csv')
 
 summary_ari = summary.sort_values(by='ari', ascending=False)[:5]
 
-summary_ari.to_csv('../Output/summary_DBSCAN_ari_5_best_al.csv')
+summary_ari.to_csv('./Output/summary_DBSCAN_ari_5_best_al.csv')
 
 # extract best values for the hyperparameters according to ARI and fit again the DBSCAN with
 # the extracted best parameters
