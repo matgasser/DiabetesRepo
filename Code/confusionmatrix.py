@@ -7,14 +7,17 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.impute import SimpleImputer
 
 # Load the dataset
-cleandat = pd.read_csv(r'./data/clean_Data.csv')
-cd = cleandat.dropna()
+cleandat = pd.read_csv(r'../data/clean_Data.csv')
+# median-imputation
+imputer = SimpleImputer(strategy='median')
+median_imputed_data = pd.DataFrame(imputer.fit_transform(cleandat), columns=cleandat.columns)
 
 # Split the dataset into features (X) and target variable (y)
-X = cd.drop('Outcome', axis=1)
-y = cd['Outcome']
+X = median_imputed_data.drop('Outcome', axis=1)
+y = median_imputed_data['Outcome']
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -39,5 +42,5 @@ for name, model in models.items():
     plt.title(f"Confusion Matrix - {name}")
     plt.xlabel("Predicted")
     plt.ylabel("Actual")
-    plt.savefig(f"./Output/AAA_{name}_matrix.png")
+    plt.savefig(f"../Output/AAA_{name}_matrix.png")
     plt.close()
