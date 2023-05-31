@@ -9,6 +9,7 @@ from plotly.subplots import make_subplots
 from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 from sklearn.metrics import silhouette_score, adjusted_rand_score
+from scipy.stats import ranksums, spearmanr, pearsonr
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.cluster import DBSCAN
