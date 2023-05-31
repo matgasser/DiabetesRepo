@@ -3,9 +3,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, f1_score
 
 # Load the dataset
-cleandat = pd.read_csv(r'./data/clean_Data.csv')
+cleandat = pd.read_csv(r'../data/clean_Data.csv')
 cd = cleandat.dropna()
 
 # Split the dataset into features (X) and target variable (y)
@@ -28,7 +29,11 @@ y_pred = clf.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
 
+# Calculate the F1 score of the model
+f1 = f1_score(y_test, y_pred)
+print("F1 Score:", f1)
+
 # Visualize the decision tree
 plt.figure(figsize=(20, 15))
 plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'], filled=True)
-plt.savefig("./Output/decision_tree.svg")
+plt.savefig("../Output/decision_tree.svg")
