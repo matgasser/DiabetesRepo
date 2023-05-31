@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-cleandat = pd.read_csv(r'../data/clean_Data.csv')
+cleandat = pd.read_csv(r'./data/clean_Data.csv')
 cd = cleandat.dropna()
 
 # Split the dataset into features (X) and target variable (y)
@@ -39,4 +39,5 @@ for name, model in models.items():
     plt.title(f"Confusion Matrix - {name}")
     plt.xlabel("Predicted")
     plt.ylabel("Actual")
-    plt.show()
+    plt.savefig(f"./Output/AAA_{name}_matrix.png")
+    plt.close()
