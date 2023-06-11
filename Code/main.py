@@ -105,6 +105,8 @@ output_folder = "../Output"
 normalized_data = (clean_Data - clean_Data.min()) / (clean_Data.max() - clean_Data.min())
 print(normalized_data.describe())
 
+"feature engineering --> combine two related features to create a new feature"
+
 " train-test-split "
 # normal distribution 80-20
 
