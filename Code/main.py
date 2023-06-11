@@ -4,6 +4,7 @@ import pandas as pd
 import seaborn as sns
 import os
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 # import plotly.graph_objects as go
 # from plotly.subplots import make_subplots
 from sklearn.cluster import KMeans
@@ -97,8 +98,12 @@ def create_histplots (csv_file, output_folder):
 csv_file = "../data/clean_Data.csv"
 output_folder = "../Output"
 
-" data imputation / data normalization --> what first? "
+" data imputation"
 # impute the missing values with / normalize the data --> probably both necessary
+
+"data normalization - 0 to 1"
+normalized_data = (clean_Data - clean_Data.min()) / (clean_Data.max() - clean_Data.min())
+print(normalized_data.describe())
 
 " train-test-split "
 # normal distribution 80-20
