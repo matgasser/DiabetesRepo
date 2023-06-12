@@ -12,15 +12,6 @@ from sklearn.metrics import accuracy_score
 # load data
 clean_Data = pd.read_csv("../data/clean_Data.csv")
 
-# mean-imputation
-from sklearn.impute import SimpleImputer
-imputer = imputer = SimpleImputer(strategy='mean')
-mean_imputed_data = pd.DataFrame(imputer.fit_transform(clean_Data), columns=clean_Data.columns)
-
-# median-imputation
-imputer = SimpleImputer(strategy='median')
-median_imputed_data = pd.DataFrame(imputer.fit_transform(clean_Data), columns=clean_Data.columns)
-
 # KNN-imputation
 from sklearn.impute import KNNImputer
 imputer = KNNImputer(n_neighbors=5)
@@ -29,8 +20,15 @@ KNN_imputed_data = pd.DataFrame(imputer.fit_transform(clean_Data), columns=clean
 # multiple-imputation
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
+import pandas as pd
+
 imputer = IterativeImputer()
 multiple_imputed_data = pd.DataFrame(imputer.fit_transform(clean_Data), columns=clean_Data.columns)
+
+number_of_iterations = imputer.n_iter_
+print("Number of imputation iterations:", number_of_iterations)
+
+
 
 ###############################################################
 

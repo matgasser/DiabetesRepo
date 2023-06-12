@@ -4,6 +4,7 @@ import pandas as pd
 import seaborn as sns
 import os
 import matplotlib.pyplot as plt
+import sklearn
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 # import plotly.graph_objects as go
 # from plotly.subplots import make_subplots
@@ -22,6 +23,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+#from sklearn.impute import IterativeImputer
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn import svm
+from sklearn.metrics import accuracy_score
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -99,10 +105,12 @@ csv_file = "../data/clean_Data.csv"
 output_folder = "../Output"
 
 " data imputation"
-# impute the missing values with / normalize the data --> probably both necessary
+from sklearn.impute import KNNImputer
+imputer = KNNImputer(n_neighbors=5)
+KNN_imputed_data = pd.DataFrame(imputer.fit_transform(clean_Data), columns=clean_Data.columns)
 
 "data normalization - 0 to 1"
-normalized_data = (clean_Data - clean_Data.min()) / (clean_Data.max() - clean_Data.min())
+normalized_data = (KNN_imputed_data - KNN_imputed_data.min()) / (KNN_imputed_data.max() - KNN_imputed_data.min())
 print(normalized_data.describe())
 
 "feature engineering --> combine two related features to create a new feature"
