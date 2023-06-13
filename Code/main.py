@@ -109,6 +109,15 @@ from sklearn.impute import KNNImputer
 imputer = KNNImputer(n_neighbors=5)
 KNN_imputed_data = pd.DataFrame(imputer.fit_transform(clean_Data), columns=clean_Data.columns)
 
+from sklearn.impute import IterativeImputer
+import pandas as pd
+
+imputer = IterativeImputer()
+multiple_imputed_data = imputer.fit_transform(clean_Data)
+multiple_imputed_data = pd.DataFrame(multiple_imputed_data, columns=clean_Data.columns)
+number_of_iterations = imputer.n_iter_
+print("Number of imputation iterations:", number_of_iterations)
+
 "data normalization - 0 to 1"
 normalized_data = (KNN_imputed_data - KNN_imputed_data.min()) / (KNN_imputed_data.max() - KNN_imputed_data.min())
 print(normalized_data.describe())
