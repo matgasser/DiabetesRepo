@@ -109,9 +109,7 @@ from sklearn.impute import KNNImputer
 imputer = KNNImputer(n_neighbors=5)
 KNN_imputed_data = pd.DataFrame(imputer.fit_transform(clean_Data), columns=clean_Data.columns)
 
-from sklearn.impute import IterativeImputer
-import pandas as pd
-
+from fancyimpute import IterativeImputer
 imputer = IterativeImputer()
 multiple_imputed_data = imputer.fit_transform(clean_Data)
 multiple_imputed_data = pd.DataFrame(multiple_imputed_data, columns=clean_Data.columns)
