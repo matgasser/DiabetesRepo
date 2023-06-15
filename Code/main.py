@@ -23,7 +23,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-#from sklearn.impute import IterativeImputer
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn import svm
@@ -46,9 +47,16 @@ def data_exploration(data):
 
 data_exploration(rawData)
 
-def create_histplots (csv_file, output_folder):
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def create_histplots(csv_file, output_folder):
     data = pd.read_csv(csv_file)
     output_folder = os.path.abspath(output_folder)
+    file_name = os.path.basename(csv_file)
+    file_name_without_extension = os.path.splitext(file_name)[0]
+
     fig, axes = plt.subplots(3, 3, figsize=(15, 18))
 
     for i, column in enumerate(data.columns):
@@ -57,13 +65,13 @@ def create_histplots (csv_file, output_folder):
         ax = axes[row, col]
         ax.hist(data[column], bins='auto', edgecolor='black', linewidth=1.2)
 
-        ax.set_title(f"Distribution of raw data: {column}")
+        ax.set_title(f"Distribution of {file_name_without_extension}: {column}")
         ax.set_xlabel(column)
         ax.set_ylabel("Count")
 
         ax.grid(True)
 
-        output_file = os.path.join(output_folder, "histplots_raw_Data.png")
+    output_file = os.path.join(output_folder, f"histplots_{file_name_without_extension}.png")
     plt.savefig(output_file)
 
 csv_file = "../data/diabetes.csv"
@@ -80,36 +88,14 @@ clean_Data.to_csv("../Data/clean_Data.csv", index = False)
 
 data_exploration(clean_Data)
 
-def create_histplots (csv_file, output_folder):
-    data = pd.read_csv(csv_file)
-    output_folder = os.path.abspath(output_folder)
-    fig, axes = plt.subplots(3, 3, figsize=(15, 18))
-
-    for i, column in enumerate(data.columns):
-        row = i // 3
-        col = i % 3
-        ax = axes[row, col]
-        ax.hist(data[column], bins='auto', edgecolor='black', linewidth=1.2)
-
-        ax.set_title(f"Distribution of clean data: {column}")
-        ax.set_xlabel(column)
-        ax.set_ylabel("Count")
-
-        ax.grid(True)
-
-
-        output_file = os.path.join(output_folder, "histplots_clean_Data.png")
-    plt.savefig(output_file)
-
+" create histplots of clean_Data "
 csv_file = "../data/clean_Data.csv"
 output_folder = "../Output"
 
-" data imputation"
-from sklearn.impute import KNNImputer
-imputer = KNNImputer(n_neighbors=5)
-KNN_imputed_data = pd.DataFrame(imputer.fit_transform(clean_Data), columns=clean_Data.columns)
+create_histplots(csv_file, output_folder)
 
-from fancyimpute import IterativeImputer
+" data imputation"
+from sklearn.impute import IterativeImputer
 imputer = IterativeImputer()
 multiple_imputed_data = imputer.fit_transform(clean_Data)
 multiple_imputed_data = pd.DataFrame(multiple_imputed_data, columns=clean_Data.columns)
@@ -117,8 +103,18 @@ number_of_iterations = imputer.n_iter_
 print("Number of imputation iterations:", number_of_iterations)
 
 "data normalization - 0 to 1"
-normalized_data = (KNN_imputed_data - KNN_imputed_data.min()) / (KNN_imputed_data.max() - KNN_imputed_data.min())
+normalized_data = (multiple_imputed_data - multiple_imputed_data.min()) / (multiple_imputed_data.max() - multiple_imputed_data.min())
 print(normalized_data.describe())
+
+data_exploration(normalized_data)
+
+" plot the imputated-normalized data "
+normalized_data.to_csv("../Data/normalized_data.csv", index = False)
+
+csv_file = "../data/normalized_data.csv"
+output_folder = "../Output"
+
+create_histplots(csv_file, output_folder)
 
 "feature engineering --> combine two related features to create a new feature"
 

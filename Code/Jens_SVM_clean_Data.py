@@ -29,7 +29,7 @@ number_of_iterations = imputer.n_iter_
 print("Number of imputation iterations:", number_of_iterations)
 
 
-
+"""
 ###############################################################
 
 # separating the data and labels
@@ -91,7 +91,7 @@ median_test_data_accuracy = accuracy_score(X_median_test_prediction, Y_median_te
 print('Accuracy score of the median-imputed test data : ', mean_test_data_accuracy)
 
 ###############################################################
-
+"""
 # separating the data and labels
 X_KNN = KNN_imputed_data.drop(columns = 'Outcome', axis=1)
 Y_KNN = KNN_imputed_data['Outcome']
