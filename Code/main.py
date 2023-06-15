@@ -14,7 +14,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.cluster import DBSCAN
 from sklearn.metrics import roc_curve, roc_auc_score
-from sklearn.metrics import roc_curve, confusion_matrix, auc
+from sklearn.metrics import roc_curve, confusion_matrix, classification_report, r2_score, mean_squared_error,ConfusionMatrixDisplay,auc
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -27,6 +27,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -121,10 +122,25 @@ X = normalized_data.drop(columns='Outcome', axis=1)
 Y = normalized_data['Outcome']
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratify=Y, random_state=0)
 
+
 " ML models "
 # LogReg, SVM, DecisionTree, RandomForrest
-
-# Logistic Regression
+#LogReg
+logistic = LogisticRegression()
+logistic.fit(X_train,Y_train)
+accuracy = logistic.score(X_test,Y_test)
+log_prediciton = logistic.predict(X_test)
+c_m = confusion_matrix(Y_test, log_prediciton)
+print("Accuracy = " , accuracy)
+print("Clas. Report:\n", classification_report(Y_test, log_prediciton))
+print("Training Score:", logistic.score(X_train, Y_train) * 100)
+print("Mean Squared Error:", mean_squared_error(Y_test, log_prediciton))
+print("R2 score is:", r2_score(Y_test, log_prediciton))
+print("Confusion Matrix:\n", c_m)
+color = 'white'
+disp = ConfusionMatrixDisplay(confusion_matrix=c_m)
+disp.plot()
+plt.show()
 
 # Support Vector Machines (SVM)
 classifier = svm.SVC(kernel='linear')
@@ -139,6 +155,16 @@ test_data_accuracy = accuracy_score(Y_test, Y_test_prediction)
 print('Accuracy score of the test data with SVM: ', test_data_accuracy)
 
 # DecisionTree
+clf = DecisionTreeClassifier()
+clf.fit(X_train, Y_train)
+Y_pred = clf.predict(X_test)
+accuracy = accuracy_score(Y_test, Y_pred)
+print("Accuracy:", accuracy)
+
+# Decision tree plot
+plt.figure(figsize=(12, 8))
+plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'], filled=True)
+plt.show()
 
 # RandomForrest
 
