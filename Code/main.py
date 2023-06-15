@@ -6,8 +6,6 @@ import os
 import matplotlib.pyplot as plt
 import sklearn
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-# import plotly.graph_objects as go
-# from plotly.subplots import make_subplots
 from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist
 from sklearn.metrics import silhouette_score, adjusted_rand_score
@@ -44,12 +42,9 @@ def data_exploration(data):
     print(data.info())
     print(data.describe())
     print(data.isna().sum())
+    print('############################################################')
 
 data_exploration(rawData)
-
-import os
-import pandas as pd
-import matplotlib.pyplot as plt
 
 def create_histplots(csv_file, output_folder):
     data = pd.read_csv(csv_file)
@@ -109,6 +104,8 @@ print(normalized_data.describe())
 data_exploration(normalized_data)
 
 " plot the imputated-normalized data "
+normalized_data = normalized_data.astype(float)
+normalized_data['Outcome'] = normalized_data['Outcome'].astype(int)
 normalized_data.to_csv("../Data/normalized_data.csv", index = False)
 
 csv_file = "../data/normalized_data.csv"
@@ -120,9 +117,32 @@ create_histplots(csv_file, output_folder)
 
 " train-test-split "
 # normal distribution 80-20
+X = normalized_data.drop(columns='Outcome', axis=1)
+Y = normalized_data['Outcome']
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratify=Y, random_state=0)
 
 " ML models "
 # LogReg, SVM, DecisionTree, RandomForrest
+
+# Logistic Regression
+
+# Support Vector Machines (SVM)
+classifier = svm.SVC(kernel='linear')
+classifier.fit(X_train, Y_train)
+
+Y_train_prediction = classifier.predict(X_train)
+training_data_accuracy = accuracy_score(Y_train, Y_train_prediction)
+print('Accuracy score of the training data with SVM : ', training_data_accuracy)
+
+Y_test_prediction = classifier.predict(X_test)
+test_data_accuracy = accuracy_score(Y_test, Y_test_prediction)
+print('Accuracy score of the test data with SVM: ', test_data_accuracy)
+
+# DecisionTree
+
+# RandomForrest
+
+
 
 " results "
 # confusion matrix, accuracy, F1.score, ROC
