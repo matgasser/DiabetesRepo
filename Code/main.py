@@ -53,7 +53,8 @@ def create_histplots(csv_file, output_folder):
     file_name = os.path.basename(csv_file)
     file_name_without_extension = os.path.splitext(file_name)[0]
 
-    fig, axes = plt.subplots(6, 3, figsize=(15, 18))
+    fig, axes = plt.subplots(6, 3, figsize=(18, 21))
+    plt.subplots_adjust(hspace=0.5)
 
     for i, column in enumerate(data.columns):
         row = i // 3
