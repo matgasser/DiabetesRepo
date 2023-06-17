@@ -53,7 +53,7 @@ def create_histplots(csv_file, output_folder):
     file_name = os.path.basename(csv_file)
     file_name_without_extension = os.path.splitext(file_name)[0]
 
-    fig, axes = plt.subplots(3, 3, figsize=(15, 18))
+    fig, axes = plt.subplots(6, 3, figsize=(15, 18))
 
     for i, column in enumerate(data.columns):
         row = i // 3
@@ -97,6 +97,38 @@ multiple_imputed_data = imputer.fit_transform(clean_Data)
 multiple_imputed_data = pd.DataFrame(multiple_imputed_data, columns=clean_Data.columns)
 number_of_iterations = imputer.n_iter_
 print("Number of imputation iterations:", number_of_iterations)
+
+"feature eng. - creating new features "
+#Glucose * BMI
+multiple_imputed_data['Glucose_BMI'] = multiple_imputed_data['Glucose'] * multiple_imputed_data['BMI']
+
+#Age * Pregnancies
+multiple_imputed_data['Age_Pregnancies'] = multiple_imputed_data['Age'] * multiple_imputed_data['Pregnancies']
+
+#Insulin / Glucose
+multiple_imputed_data['Insulin_Glucose'] = multiple_imputed_data['Insulin'] / multiple_imputed_data['Glucose']
+
+#SkinThickness + BMI
+multiple_imputed_data['SkinThickness_BMI'] = multiple_imputed_data['SkinThickness'] + multiple_imputed_data['BMI']
+
+#BloodPressure * DiabetesPedigreeFunction
+multiple_imputed_data['BP_DiabetesPedigree'] = multiple_imputed_data['BloodPressure'] * multiple_imputed_data['DiabetesPedigreeFunction']
+
+#Glucose - Age
+multiple_imputed_data['Glucose_Age'] = multiple_imputed_data['Glucose'] - multiple_imputed_data['Age']
+
+#BMI / Age
+multiple_imputed_data['BMI_Age'] = multiple_imputed_data['BMI'] / multiple_imputed_data['Age']
+
+#Insulin * Pregnancies
+multiple_imputed_data['Insulin_Pregnancies'] = multiple_imputed_data['Insulin'] * multiple_imputed_data['Pregnancies']
+
+multiple_imputed_data['Glucose_Age_Ratio'] = multiple_imputed_data['Glucose'] / multiple_imputed_data['Age']
+
+# View the updated DataFrame
+print(multiple_imputed_data.head())
+print(multiple_imputed_data.shape)
+
 
 "data normalization - 0 to 1"
 normalized_data = (multiple_imputed_data - multiple_imputed_data.min()) / (multiple_imputed_data.max() - multiple_imputed_data.min())

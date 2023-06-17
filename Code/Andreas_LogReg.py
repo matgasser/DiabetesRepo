@@ -48,4 +48,13 @@ print("Mean Squared Error:", mean_squared_error(y_test, log_prediciton))
 print("R2 score is:", r2_score(y_test, log_prediciton))
 
 
+"""Glucose * BMI: Multiplying the 'Glucose' and 'BMI' features to capture the potential interaction between blood glucose levels and body mass index.
+Age * Pregnancies: Calculating the product of 'Age' and 'Pregnancies' to capture the combined effect of age and the number of pregnancies.
+Insulin / Glucose: Dividing the 'Insulin' feature by 'Glucose' to capture the ratio of serum insulin level to blood glucose concentration.
+SkinThickness + BMI: Adding the 'SkinThickness' and 'BMI' features to capture the combined effect of subcutaneous fat thickness and body mass index.
+BloodPressure * DiabetesPedigreeFunction: Multiplying the 'BloodPressure' and 'DiabetesPedigreeFunction' features to capture the potential interaction between blood pressure and the genetic influence of diabetes.
+Glucose - Age: Calculating the difference between 'Glucose' and 'Age' to capture the deviation of blood glucose level from the average age.
+BMI / Age: Dividing the 'BMI' feature by 'Age' to capture the ratio of body mass index to age.
+Insulin * Pregnancies: Multiplying the 'Insulin' and 'Pregnancies' features to capture the combined effect of serum insulin level and the number of pregnancies."""
+
 
