@@ -198,7 +198,7 @@ print("Accuracy:", accuracy)
 # Decision tree plot
 plt.figure(figsize=(12, 8))
 plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'], filled=True)
-plt.show()
+plt.savefig("./Output/decision_tree.png")
 
 # RandomForrest
 multiple_imputed_data.describe()
