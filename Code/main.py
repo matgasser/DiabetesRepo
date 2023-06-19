@@ -200,7 +200,56 @@ plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'],
 plt.show()
 
 # RandomForrest
+multiple_imputed_data.describe()
 
+multiple_imputed_data['Outcome'].value_counts()
+
+from sklearn.model_selection import train_test_split
+x = multiple_imputed_data.drop(['Outcome'],axis=1)
+y = multiple_imputed_data['Outcome']
+
+sc= StandardScaler()
+x_scaled= sc.fit_transform(x)
+
+x_train, x_test, y_train, y_test = train_test_split(x_scaled, y, test_size=0.2, random_state=0)
+x_train.shape, y_train.shape
+
+x_test.shape, y_test.shape
+
+
+logreg = LogisticRegression()
+logreg.fit(x_train, y_train)
+y_pred = logreg.predict(x_test)
+
+
+confmat = confusion_matrix(y_pred, y_test)
+confmat
+
+
+
+random_forest = RandomForestClassifier(criterion = "gini", 
+                                       min_samples_leaf = 1, 
+                                       min_samples_split = 10,   
+                                       n_estimators=100, 
+                                       max_features='auto', 
+                                       oob_score=True, 
+                                       random_state=1, 
+                                       n_jobs=-1)
+
+random_forest.fit(x_train, y_train)
+y_pred = random_forest.predict(x_test)
+
+confmat1 = confusion_matrix(y_pred, y_test)
+confmat1
+
+from sklearn import metrics
+cm=metrics.ConfusionMatrixDisplay(confusion_matrix=metrics.confusion_matrix(y_pred,y_test,labels=random_forest.classes_),
+                              display_labels=random_forest.classes_)
+forest_plot = cm.plot(cmap="magma")
+
+plt.savefig("../Output/forest_plot.png")
+
+accuracy_score(y_pred, y_test)
 
 
 " results "
