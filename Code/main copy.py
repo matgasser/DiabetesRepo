@@ -179,7 +179,7 @@ disp = ConfusionMatrixDisplay(confusion_matrix=c_m)
 disp.plot()
 #plt.show()
 
-plt.savefig("./Output/logistic_confusion_matrix.svg")
+plt.savefig("./Output/logistic_confusion_matrix.png")
 
 # Support Vector Machines (SVM)
 classifier = svm.SVC(kernel='linear')
@@ -203,7 +203,7 @@ print("Accuracy:", accuracy)
 # Decision tree plot
 plt.figure(figsize=(12, 8))
 plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'], filled=True)
-plt.savefig("./Output/decision_tree.png")
+plt.savefig("./Output/decision_tree.svg")
 
 # RandomForrest
 multiple_imputed_data.describe()
