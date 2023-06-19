@@ -1,30 +1,14 @@
 " installs and imports with version "
 import numpy as np
 import pandas as pd
-import seaborn as sns
 import os
 import matplotlib.pyplot as plt
-import sklearn
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.cluster import KMeans
-from scipy.spatial.distance import cdist
-from sklearn.metrics import silhouette_score, adjusted_rand_score
-from scipy.stats import ranksums, spearmanr, pearsonr
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler, LabelEncoder
-from sklearn.cluster import DBSCAN
 from sklearn import metrics
 from sklearn.metrics import roc_curve, roc_auc_score
 from sklearn.metrics import roc_curve, confusion_matrix, classification_report, r2_score, mean_squared_error,ConfusionMatrixDisplay,auc
-from sklearn.model_selection import StratifiedKFold
-from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
 from sklearn.experimental import enable_iterative_imputer
-from sklearn.impute import IterativeImputer
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import accuracy_score
@@ -132,7 +116,6 @@ multiple_imputed_data['Glucose_Age_Ratio'] = multiple_imputed_data['Glucose'] / 
 print(multiple_imputed_data.head())
 print(multiple_imputed_data.shape)
 
-
 "data normalization - 0 to 1"
 normalized_data = (multiple_imputed_data - multiple_imputed_data.min()) / (multiple_imputed_data.max() - multiple_imputed_data.min())
 print(normalized_data.describe())
@@ -149,14 +132,11 @@ output_folder = "../Output"
 
 create_histplots(csv_file, output_folder)
 
-"feature engineering --> combine two related features to create a new feature"
-
 " train-test-split "
 # normal distribution 80-20
 X = normalized_data.drop(columns='Outcome', axis=1)
 Y = normalized_data['Outcome']
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratify=Y, random_state=0)
-
 
 " ML models "
 # LogReg, SVM, DecisionTree, RandomForrest
@@ -175,9 +155,6 @@ print("Logistic Regression AUC-ROC:", lr_auc_roc)
 print("Confusion Matrix:\n", c_m)
 color = 'white'
 disp = ConfusionMatrixDisplay(confusion_matrix=c_m)
-disp.plot()
-plt.show()
-
 
 # Support Vector Machines (SVM)
 classifier = svm.SVC(kernel='linear', probability=True)
@@ -205,7 +182,6 @@ print("Decision Tree AUC-ROC:", dt_auc_roc)
 # Decision tree plot
 plt.figure(figsize=(12, 8))
 plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'], filled=True)
-plt.show()
 
 # RandomForrest
 random_forest = RandomForestClassifier(criterion = "gini",
@@ -229,9 +205,3 @@ plt.savefig("../Output/forest_plot.png")
 random_forest.fit(X_train, Y_train)
 rf_auc_roc = roc_auc_score(Y_test, random_forest.predict_proba(X_test)[:, 1])
 print("Random Forest AUC-ROC:", rf_auc_roc)
-
-" results "
-# confusion matrix, accuracy, F1.score, ROC
-
-" outlook "
-# what else could / should be done
