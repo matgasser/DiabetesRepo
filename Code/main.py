@@ -124,9 +124,10 @@ multiple_imputed_data['BMI_Age'] = multiple_imputed_data['BMI'] / multiple_imput
 #Insulin * Pregnancies
 multiple_imputed_data['Insulin_Pregnancies'] = multiple_imputed_data['Insulin'] * multiple_imputed_data['Pregnancies']
 
+#Glucose / Age
 multiple_imputed_data['Glucose_Age_Ratio'] = multiple_imputed_data['Glucose'] / multiple_imputed_data['Age']
 
-# View the updated DataFrame
+# Updated DataFrame
 print(multiple_imputed_data.head())
 print(multiple_imputed_data.shape)
 
