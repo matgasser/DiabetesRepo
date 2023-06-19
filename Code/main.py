@@ -215,8 +215,6 @@ from sklearn.model_selection import train_test_split
 x = multiple_imputed_data.drop(['Outcome'],axis=1)
 y = multiple_imputed_data['Outcome']
 
-
-
 sc= StandardScaler()
 x_scaled= sc.fit_transform(x)
 
