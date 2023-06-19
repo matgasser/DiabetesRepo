@@ -56,10 +56,35 @@ def create_histplots(csv_file, output_folder):
     output_file = os.path.join(output_folder, f"histplots_{file_name_without_extension}.png")
     plt.savefig(output_file)
 
+
+def create_histplots2(csv_file, output_folder):
+    data = pd.read_csv(csv_file)
+    output_folder = os.path.abspath(output_folder)
+    file_name = os.path.basename(csv_file)
+    file_name_without_extension = os.path.splitext(file_name)[0]
+
+    fig, axes = plt.subplots(3, 3, figsize=(18, 21))
+    plt.subplots_adjust(hspace=0.5)
+
+    for i, column in enumerate(data.columns):
+        row = i // 3
+        col = i % 3
+        ax = axes[row, col]
+        ax.hist(data[column], bins='auto', edgecolor='black', linewidth=1.2)
+
+        ax.set_title(f"Distribution of {file_name_without_extension}: {column}")
+        ax.set_xlabel(column)
+        ax.set_ylabel("Count")
+
+        ax.grid(True)
+
+    output_file = os.path.join(output_folder, f"histplots_{file_name_without_extension}.png")
+    plt.savefig(output_file)
+
 csv_file = "../data/diabetes.csv"
 output_folder = "../Output"
 
-create_histplots(csv_file, output_folder)
+create_histplots2(csv_file, output_folder)
 
 " data cleaning "
 clean_Data = rawData.copy(deep = True)
@@ -74,7 +99,7 @@ data_exploration(clean_Data)
 csv_file = "../data/clean_Data.csv"
 output_folder = "../Output"
 
-create_histplots(csv_file, output_folder)
+create_histplots2(csv_file, output_folder)
 
 " data imputation"
 from sklearn.impute import IterativeImputer
