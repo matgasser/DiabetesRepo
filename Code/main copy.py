@@ -30,6 +30,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn import metrics
 
+
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -204,6 +205,7 @@ print("Accuracy:", accuracy)
 plt.figure(figsize=(12, 8))
 plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'], filled=True)
 plt.savefig("./Output/decision_tree.svg")
+plt.savefig("./Output/decision_tree.png")
 
 # RandomForrest
 multiple_imputed_data.describe()
@@ -221,7 +223,6 @@ x_scaled= sc.fit_transform(x)
 
 x_train, x_test, y_train, y_test = train_test_split(x_scaled, y, test_size=0.2, random_state=0)
 x_train.shape, y_train.shape
-
 x_test.shape, y_test.shape
 
 
@@ -250,7 +251,7 @@ y_pred = random_forest.predict(x_test)
 confmat1 = confusion_matrix(y_pred, y_test)
 confmat1
 
-from sklearn import metrics
+
 cm=metrics.ConfusionMatrixDisplay(confusion_matrix=metrics.confusion_matrix(y_pred,y_test,labels=random_forest.classes_),
                               display_labels=random_forest.classes_)
 forest_plot = cm.plot(cmap="magma")
