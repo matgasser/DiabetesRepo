@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 
 # load data
-clean_Data = pd.read_csv("./data/clean_Data.csv")
+clean_Data = pd.read_csv("../data/clean_Data.csv")
 
 # mean-imputation
 from sklearn.impute import SimpleImputer
@@ -209,6 +209,6 @@ cm=metrics.ConfusionMatrixDisplay(confusion_matrix=metrics.confusion_matrix(y_pr
                               display_labels=random_forest.classes_)
 forest_plot = cm.plot(cmap="magma")
 
-plt.savefig("./Output/forest_plot.png")
+plt.savefig("../Output/forest_plot.png")
 
 accuracy_score(y_pred, y_test)
