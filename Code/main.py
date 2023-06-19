@@ -124,9 +124,10 @@ multiple_imputed_data['BMI_Age'] = multiple_imputed_data['BMI'] / multiple_imput
 #Insulin * Pregnancies
 multiple_imputed_data['Insulin_Pregnancies'] = multiple_imputed_data['Insulin'] * multiple_imputed_data['Pregnancies']
 
+#Glucose / Age
 multiple_imputed_data['Glucose_Age_Ratio'] = multiple_imputed_data['Glucose'] / multiple_imputed_data['Age']
 
-# View the updated DataFrame
+# Updated DataFrame
 print(multiple_imputed_data.head())
 print(multiple_imputed_data.shape)
 
@@ -161,12 +162,11 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratif
 #LogReg
 logistic = LogisticRegression()
 logistic.fit(X_train,Y_train)
-accuracy = logistic.score(X_test,Y_test)
 log_prediciton = logistic.predict(X_test)
 c_m = confusion_matrix(Y_test, log_prediciton)
-print("Accuracy = " , accuracy)
-print("Clas. Report:\n", classification_report(Y_test, log_prediciton))
+print("Test Score (Acurracy) = " , logistic.score(X_test,Y_test))
 print("Training Score:", logistic.score(X_train, Y_train) * 100)
+#print("Clas. Report:\n", classification_report(Y_test, log_prediciton))
 print("Mean Squared Error:", mean_squared_error(Y_test, log_prediciton))
 print("R2 score is:", r2_score(Y_test, log_prediciton))
 print("Confusion Matrix:\n", c_m)
