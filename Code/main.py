@@ -28,12 +28,13 @@ from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn import metrics
 
 import warnings
 warnings.filterwarnings("ignore")
 
 " load the data "
-rawData = pd.read_csv('../data/diabetes.csv')
+rawData = pd.read_csv('./data/diabetes.csv')
 
 # data exploration
 def data_exploration(data):
@@ -71,8 +72,8 @@ def create_histplots(csv_file, output_folder):
     output_file = os.path.join(output_folder, f"histplots_{file_name_without_extension}.png")
     plt.savefig(output_file)
 
-csv_file = "../data/diabetes.csv"
-output_folder = "../Output"
+csv_file = "./data/diabetes.csv"
+output_folder = "./Output"
 
 create_histplots(csv_file, output_folder)
 
@@ -81,13 +82,13 @@ clean_Data = rawData.copy(deep = True)
 clean_Data[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']] = clean_Data[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']].replace(0, np.NaN)
 
 # save the clean data
-clean_Data.to_csv("../Data/clean_Data.csv", index = False)
+clean_Data.to_csv("./Data/clean_Data.csv", index = False)
 
 data_exploration(clean_Data)
 
 " create histplots of clean_Data "
-csv_file = "../data/clean_Data.csv"
-output_folder = "../Output"
+csv_file = "./data/clean_Data.csv"
+output_folder = "./Output"
 
 create_histplots(csv_file, output_folder)
 
@@ -140,10 +141,10 @@ data_exploration(normalized_data)
 " plot the imputated-normalized data "
 normalized_data = normalized_data.astype(float)
 normalized_data['Outcome'] = normalized_data['Outcome'].astype(int)
-normalized_data.to_csv("../Data/normalized_data.csv", index = False)
+normalized_data.to_csv("./Data/normalized_data.csv", index = False)
 
-csv_file = "../data/normalized_data.csv"
-output_folder = "../Output"
+csv_file = "./data/normalized_data.csv"
+output_folder = "./Output"
 
 create_histplots(csv_file, output_folder)
 
@@ -173,7 +174,7 @@ print("Confusion Matrix:\n", c_m)
 color = 'white'
 disp = ConfusionMatrixDisplay(confusion_matrix=c_m)
 disp.plot()
-plt.show()
+plt.savefig("./Output/confusion_matrix.png")
 
 # Support Vector Machines (SVM)
 classifier = svm.SVC(kernel='linear')
@@ -204,7 +205,7 @@ multiple_imputed_data.describe()
 
 multiple_imputed_data['Outcome'].value_counts()
 
-from sklearn.model_selection import train_test_split
+
 x = multiple_imputed_data.drop(['Outcome'],axis=1)
 y = multiple_imputed_data['Outcome']
 
@@ -226,7 +227,6 @@ confmat = confusion_matrix(y_pred, y_test)
 confmat
 
 
-
 random_forest = RandomForestClassifier(criterion = "gini", 
                                        min_samples_leaf = 1, 
                                        min_samples_split = 10,   
@@ -242,12 +242,12 @@ y_pred = random_forest.predict(x_test)
 confmat1 = confusion_matrix(y_pred, y_test)
 confmat1
 
-from sklearn import metrics
+
 cm=metrics.ConfusionMatrixDisplay(confusion_matrix=metrics.confusion_matrix(y_pred,y_test,labels=random_forest.classes_),
                               display_labels=random_forest.classes_)
 forest_plot = cm.plot(cmap="magma")
 
-plt.savefig("../Output/forest_plot.png")
+plt.savefig("./Output/forest_plot.png")
 
 accuracy_score(y_pred, y_test)
 
