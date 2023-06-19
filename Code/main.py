@@ -179,7 +179,7 @@ plt.show()
 
 
 # Support Vector Machines (SVM)
-classifier = svm.SVC(kernel='linear')
+classifier = svm.SVC(kernel='linear', probability=True)
 classifier.fit(X_train, Y_train)
 
 Y_train_prediction = classifier.predict(X_train)
@@ -189,6 +189,8 @@ print('Accuracy score of the training data with SVM : ', training_data_accuracy)
 Y_test_prediction = classifier.predict(X_test)
 test_data_accuracy = accuracy_score(Y_test, Y_test_prediction)
 print('Accuracy score of the test data with SVM: ', test_data_accuracy)
+svm_auc_roc = roc_auc_score(Y_test, classifier.predict_proba(X_test)[:, 1])
+print("SVM AUC-ROC:", svm_auc_roc)
 
 # DecisionTree
 clf = DecisionTreeClassifier()
@@ -196,6 +198,8 @@ clf.fit(X_train, Y_train)
 Y_pred = clf.predict(X_test)
 accuracy = accuracy_score(Y_test, Y_pred)
 print("Accuracy:", accuracy)
+dt_auc_roc = roc_auc_score(Y_test, clf.predict_proba(X_test)[:, 1])
+print("Decision Tree AUC-ROC:", dt_auc_roc)
 
 # Decision tree plot
 plt.figure(figsize=(12, 8))
