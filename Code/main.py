@@ -13,6 +13,7 @@ from scipy.stats import ranksums, spearmanr, pearsonr
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.cluster import DBSCAN
+from sklearn import metrics
 from sklearn.metrics import roc_curve, roc_auc_score
 from sklearn.metrics import roc_curve, confusion_matrix, classification_report, r2_score, mean_squared_error,ConfusionMatrixDisplay,auc
 from sklearn.model_selection import StratifiedKFold
@@ -203,34 +204,7 @@ plot_tree(clf, feature_names=X.columns, class_names=['No Diabetes', 'Diabetes'],
 plt.show()
 
 # RandomForrest
-multiple_imputed_data.describe()
-
-multiple_imputed_data['Outcome'].value_counts()
-
-from sklearn.model_selection import train_test_split
-x = multiple_imputed_data.drop(['Outcome'],axis=1)
-y = multiple_imputed_data['Outcome']
-
-sc= StandardScaler()
-x_scaled= sc.fit_transform(x)
-
-x_train, x_test, y_train, y_test = train_test_split(x_scaled, y, test_size=0.2, random_state=0)
-x_train.shape, y_train.shape
-
-x_test.shape, y_test.shape
-
-
-logreg = LogisticRegression()
-logreg.fit(x_train, y_train)
-y_pred = logreg.predict(x_test)
-
-
-confmat = confusion_matrix(y_pred, y_test)
-confmat
-
-
-
-random_forest = RandomForestClassifier(criterion = "gini", 
+random_forest = RandomForestClassifier(criterion = "gini",
                                        min_samples_leaf = 1, 
                                        min_samples_split = 10,   
                                        n_estimators=100, 
@@ -239,21 +213,18 @@ random_forest = RandomForestClassifier(criterion = "gini",
                                        random_state=1, 
                                        n_jobs=-1)
 
-random_forest.fit(x_train, y_train)
-y_pred = random_forest.predict(x_test)
-
-confmat1 = confusion_matrix(y_pred, y_test)
-confmat1
-
-from sklearn import metrics
-cm=metrics.ConfusionMatrixDisplay(confusion_matrix=metrics.confusion_matrix(y_pred,y_test,labels=random_forest.classes_),
+random_forest.fit(X_train, Y_train)
+y_pred_rf = random_forest.predict(X_test)
+confmat1 = confusion_matrix(y_pred_rf, Y_test)
+cm=metrics.ConfusionMatrixDisplay(confusion_matrix=metrics.confusion_matrix(y_pred_rf,Y_test,labels=random_forest.classes_),
                               display_labels=random_forest.classes_)
 forest_plot = cm.plot(cmap="magma")
-
+accuracy_score(y_pred_rf, Y_test)
 plt.savefig("../Output/forest_plot.png")
 
-accuracy_score(y_pred, y_test)
-
+random_forest.fit(X_train, Y_train)
+rf_auc_roc = roc_auc_score(Y_test, random_forest.predict_proba(X_test)[:, 1])
+print("Random Forest AUC-ROC:", rf_auc_roc)
 
 " results "
 # confusion matrix, accuracy, F1.score, ROC
