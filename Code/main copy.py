@@ -179,7 +179,7 @@ disp = ConfusionMatrixDisplay(confusion_matrix=c_m)
 disp.plot()
 #plt.show()
 
-plt.savefig("./Output/logistic_confusion_matrix.png")
+plt.savefig("./Output/logistic_confusion_matrix.svg")
 
 # Support Vector Machines (SVM)
 classifier = svm.SVC(kernel='linear')
