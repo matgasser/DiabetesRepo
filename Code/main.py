@@ -224,7 +224,7 @@ confmat1 = confusion_matrix(y_pred_rf, Y_test)
 cm=metrics.ConfusionMatrixDisplay(confusion_matrix=metrics.confusion_matrix(y_pred_rf,Y_test,labels=random_forest.classes_),
                               display_labels=random_forest.classes_)
 forest_plot = cm.plot(cmap="magma")
-accuracy_score(y_pred_rf, Y_test)
+print("Accurcy Random Forest (test)", accuracy_score(y_pred_rf, Y_test))
 plt.savefig("../Output/forest_plot.png")
 
 random_forest.fit(X_train, Y_train)
