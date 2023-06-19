@@ -177,7 +177,9 @@ print("Confusion Matrix:\n", c_m)
 color = 'white'
 disp = ConfusionMatrixDisplay(confusion_matrix=c_m)
 disp.plot()
-plt.show()
+#plt.show()
+
+plt.savefig("./Output/logistic_confusion_matrix.png")
 
 # Support Vector Machines (SVM)
 classifier = svm.SVC(kernel='linear')
